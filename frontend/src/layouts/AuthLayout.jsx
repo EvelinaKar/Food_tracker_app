@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import styles from "./AuthLayout.module.scss";
+import PropTypes from 'prop-types';
+import styles from './AuthLayout.module.scss';
 
 const AuthLayout = ({ children }) => {
   return (

@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
-import { ROUTES } from "../../routes/consts";
-import styles from "./Login.module.scss";
-import { loginUser } from "../../api/userService";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
+import { ROUTES } from '../../routes/consts';
+import styles from './Login.module.scss';
+import { loginUser } from '../../api/userService';
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -20,10 +20,10 @@ function Login() {
 
     if (!formData.email) {
       formIsValid = false;
-      errors["email"] = "Email cannot be empty";
+      errors['email'] = 'Email cannot be empty';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       formIsValid = false;
-      errors["email"] = "Email is not valid";
+      errors['email'] = 'Email is not valid';
     }
 
     setErrors(errors);
@@ -46,19 +46,14 @@ function Login() {
 
     try {
       const response = await loginUser(formData);
-      console.log("Login successful:", response.data);
-      localStorage.setItem("token", response.data.token);
-      navigate("/home");
+      console.log('Login successful:', response);
+      localStorage.setItem('token', response.token);
+      navigate(ROUTES.HOME);
     } catch (error) {
-      console.error(
-        "Login failed:",
-        error.response ? error.response.data : "No response"
-      );
+      console.error('Login failed:', error.response ? error.response.data : 'No response');
       setErrors({
         ...errors,
-        apiError: error.response
-          ? error.response.data.message
-          : "Login failed.",
+        apiError: error.response ? error.response.data.message : 'Login failed.',
       });
     }
   };
@@ -92,9 +87,7 @@ function Login() {
             Log In
           </Button>
           <Link to={ROUTES.REGISTER}>
-            <div className={styles.registerLink}>
-              Do not have an account? Register
-            </div>
+            <div className={styles.registerLink}>Do not have an account? Register</div>
           </Link>
         </form>
       </div>

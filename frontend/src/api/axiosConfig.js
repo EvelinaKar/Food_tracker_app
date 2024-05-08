@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API } from "../api/consts";
+import axios from 'axios';
+import { API } from '../api/consts';
 
 const apiClient = axios.create({
   baseURL: API,
@@ -7,7 +7,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -15,7 +15,7 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;
