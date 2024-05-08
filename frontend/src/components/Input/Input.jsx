@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import styles from "./Input.module.scss";
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import styles from './Input.module.scss';
 
-const Input = ({ label, className = "", ...props }) => {
+const Input = ({ label, className = '', ...props }) => {
   return (
     <>
       {label && (

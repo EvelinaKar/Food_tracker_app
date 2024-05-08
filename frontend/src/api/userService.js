@@ -1,19 +1,11 @@
-import apiClient from "./axiosConfig";
+import apiClient from './axiosConfig';
 
 export const registerUser = async (userData) => {
-  try {
-    const response = await apiClient.post("/auth/register", userData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await apiClient.post('/auth/register', userData);
+  return response.data;
 };
 
 export const loginUser = async (credentials) => {
-  try {
-    const response = await apiClient.post("/auth/login", credentials);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await apiClient.post('/auth/login', credentials);
+  return response.data;
 };

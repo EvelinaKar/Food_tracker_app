@@ -1,15 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../Button/Button";
-import Logo from "../../assets/logo.png";
-import styles from "./NavigationBar.module.scss";
-import { navigationBarLinks } from "../../routes/consts";
+import { Link, useNavigate } from 'react-router-dom';
+import Button from '../Button/Button';
+import Logo from '../../assets/logo.png';
+import styles from './NavigationBar.module.scss';
+import { navigationBarLinks } from '../../routes/consts';
 
 const NavigationBar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   return (
