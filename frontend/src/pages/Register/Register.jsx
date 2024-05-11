@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import styles from './Register.module.scss';
-import { registerUser } from '../../api/userService';
+import { registerUser } from '../../api/auth';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -70,7 +70,6 @@ function Register() {
     }
   };
 
-  // Handle changes in the input fields
   const handleChange = (e) => {
     setFormData({
       ...formData,
