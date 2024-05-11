@@ -4,7 +4,7 @@ import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import { ROUTES } from '../../routes/consts';
 import styles from './Login.module.scss';
-import { loginUser } from '../../api/userService';
+import { loginUser } from '../../api/auth';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -46,9 +46,13 @@ function Login() {
 
     try {
       const response = await loginUser(formData);
-      console.log('Login successful:', response);
-      localStorage.setItem('token', response.token);
-      navigate(ROUTES.HOME);
+      if (response.token) {
+        console.log('Login successful:', response);
+        localStorage.setItem('authToken', response.token);
+        navigate(ROUTES.HOME);
+      } else {
+        throw new Error('No token received');
+      }
     } catch (error) {
       console.error('Login failed:', error.response ? error.response.data : 'No response');
       setErrors({

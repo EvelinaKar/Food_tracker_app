@@ -1,24 +1,17 @@
-import Login from '../pages/Login/Login';
-import Register from '../pages/Register/Register';
-// import BasicLayout from '../layouts/BasicLayout';
-import AuthLayout from '../layouts/AuthLayout';
-
 export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
+  HOME: '/home',
+  MY_FOODS: '/my-foods',
 };
 
-export const routes = [
+export const navigationBarLinks = [
   {
-    path: ROUTES.LOGIN,
-    Component: Login,
-    Layout: AuthLayout,
+    title: 'Home',
+    path: ROUTES.HOME,
   },
   {
-    path: ROUTES.REGISTER,
-    Component: Register,
-    Layout: AuthLayout,
+    title: 'My Foods',
+    path: ROUTES.MY_FOODS,
   },
 ];
-
-export const navigationBarLinks = [{}];
