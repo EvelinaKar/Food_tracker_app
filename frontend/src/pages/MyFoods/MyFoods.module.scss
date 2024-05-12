@@ -1,0 +1,19 @@
+.MyFoods {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f8f9fa; // A light grey background
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: auto;
+  
+    .noFoods {
+      color: #6c757d; // A soft grey text color
+      text-align: center;
+      padding: 20px;
+      font-size: 1.2rem;
+    }
+  }
+  
+  
