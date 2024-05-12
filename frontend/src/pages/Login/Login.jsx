@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import { ROUTES } from '../../routes/consts';
 import styles from './Login.module.scss';
 import { loginUser } from '../../api/auth';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ function Login() {
     password: '',
   });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const { handleLogin } = useContext(AuthContext);
 
   const validateForm = () => {
     let formIsValid = true;
@@ -46,15 +47,14 @@ function Login() {
 
     try {
       const response = await loginUser(formData);
-      if (response.token) {
-        console.log('Login successful:', response);
-        localStorage.setItem('authToken', response.token);
-        navigate(ROUTES.HOME);
+      if (response && response.token) {
+        console.log('Login successful.');
+        handleLogin(response.user, response.token);
       } else {
         throw new Error('No token received');
       }
     } catch (error) {
-      console.error('Login failed:', error.response ? error.response.data : 'No response');
+      console.error('Login failed:', error);
       setErrors({
         ...errors,
         apiError: error.response ? error.response.data.message : 'Login failed.',
@@ -63,38 +63,36 @@ function Login() {
   };
 
   return (
-    <div>
-      <div className={styles.formContainer}>
-        <div className={styles.formTitle}>Login</div>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className={styles.fullWidth}
-            required
-          />
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className={styles.fullWidth}
-            required
-          />
-          <Button type="submit" className={styles.loginButton}>
-            Log In
-          </Button>
-          <Link to={ROUTES.REGISTER}>
-            <div className={styles.registerLink}>Do not have an account? Register</div>
-          </Link>
-        </form>
-      </div>
+    <div className={styles.formContainer}>
+      <div className={styles.formTitle}>Login</div>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          className={styles.fullWidth}
+          required
+        />
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          className={styles.fullWidth}
+          required
+        />
+        <Button type="submit" className={styles.loginButton}>
+          Log In
+        </Button>
+        <Link to={ROUTES.REGISTER}>
+          <div className={styles.registerLink}>Do not have an account? Register</div>
+        </Link>
+      </form>
     </div>
   );
 }

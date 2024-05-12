@@ -5,27 +5,26 @@ import { ROUTES } from '../routes/consts';
 import { checkUser } from '../api/auth';
 
 export const AuthContext = createContext({
-  user: null,
   isLoggedIn: false,
   handleLogin: () => {},
   handleLogout: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const authenticatedUser = await checkUser();
-        if (authenticatedUser) {
-          setUser(authenticatedUser);
+        const userData = await checkUser();
+        if (userData) {
+          setIsLoggedIn(true);
         } else {
           handleLogout();
         }
       } catch (error) {
-        console.error('Error checking user authentication', error);
+        console.error('Error checking user authentication:', error);
         handleLogout();
       }
     };
@@ -35,17 +34,17 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogin = (userData, token) => {
     localStorage.setItem('authToken', token);
-    setUser(userData);
+    setIsLoggedIn(true);
     navigate(ROUTES.HOME);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
-    setUser(null);
+    setIsLoggedIn(false);
     navigate(ROUTES.LOGIN);
   };
 
-  return <AuthContext.Provider value={{ user, isLoggedIn: !!user, handleLogin, handleLogout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isLoggedIn, handleLogin, handleLogout }}>{children}</AuthContext.Provider>;
 };
 
 AuthProvider.propTypes = {

@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { authToken } = require('../middlewares/authMiddleware');
 const { registerSchema, loginSchema } = require('../validation/authValidationSchemas');
 const { handleError } = require('../validation/errorHandler');
+const { fetchUserWithFoodItems, userDataResponse } = require('../utils/db');
 
 require('dotenv').config();
 
@@ -40,20 +41,21 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const user = await client.db(process.env.MONGO_DATABASE).collection('users').findOne({ email });
-
     if (!user) {
       return res.status(401).send({ message: 'Invalid email or password.' });
     }
 
-    bcrypt.compare(password, user.password, (error, result) => {
-      if (error || !result) {
-        return res.status(401).send({ message: 'Invalid email or password.' });
-      }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).send({ message: 'Invalid email or password.' });
+    }
 
-      const token = jwt.sign({ email: user.email }, process.env.AUTH_SECRET_KEY, { expiresIn: '365d' });
+    const userWithFoodItems = await fetchUserWithFoodItems(email);
+    const userData = userDataResponse(userWithFoodItems);
 
-      return res.send({ token });
-    });
+    const token = jwt.sign({ _id: user._id.toString(), email: user.email }, process.env.AUTH_SECRET_KEY, { expiresIn: '365d' });
+
+    return res.send({ message: 'You have successfully logged in.', user: userData, token });
   } catch (error) {
     return handleError(res, error);
   }

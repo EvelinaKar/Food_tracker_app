@@ -3,6 +3,7 @@ export const ROUTES = {
   REGISTER: '/register',
   HOME: '/home',
   MY_FOODS: '/my-foods',
+  CREATE_FOOD: '/create-food',
 };
 
 export const navigationBarLinks = [
