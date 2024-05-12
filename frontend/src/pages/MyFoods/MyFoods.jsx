@@ -15,14 +15,14 @@ const MyFoods = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       setError('Please log in to see your foods.');
+      navigate(ROUTES.LOGIN);
       return;
     }
 
     const getFoodItems = async () => {
       try {
-        const data = await fetchFoodItems();
-        console.log('Fetched data:', data);
-        setFoodItems(data.data);
+        const result = await fetchFoodItems();
+        setFoodItems(result);
       } catch (err) {
         setError('Failed to fetch food items');
         console.error(err);
@@ -30,7 +30,7 @@ const MyFoods = () => {
     };
 
     getFoodItems();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   const handleCreateFoodClick = () => {
     navigate(ROUTES.CREATE_FOOD);
@@ -41,11 +41,7 @@ const MyFoods = () => {
       <h1>My Food Items</h1>
       {error && <p>{error}</p>}
       <Button onClick={handleCreateFoodClick}>Create Food</Button>
-      {foodItems.length > 0 ? (
-        foodItems.map((item) => <FoodItem key={item._id} foodItem={item.name} />)
-      ) : (
-        <p>No food items found. Add some!</p>
-      )}
+      {foodItems.length > 0 ? foodItems.map((item) => <FoodItem key={item._id} foodItem={item} />) : <p>No food items found. Add some!</p>}
     </div>
   );
 };

@@ -7,8 +7,8 @@ const FoodItem = ({ foodItem }) => {
     <div className="food-item">
       <h2>{foodItem.name}</h2>
       <ul>
-        <li>Values Per:: {foodItem.valuesPer}</li>
-        <li>Calories: {foodItem.kcal}</li>
+        <li>Values Per: {foodItem.valuesPer} grams</li>
+        <li>Calories: {foodItem.kcal} kcal</li>
         <li>Fat: {foodItem.fat} grams</li>
         <li>Carbohydrates: {foodItem.carbs} grams</li>
         <li>Protein: {foodItem.protein} grams</li>
