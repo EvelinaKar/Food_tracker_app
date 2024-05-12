@@ -14,8 +14,27 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  const handleLogin = (userData, token) => {
+    localStorage.setItem('authToken', token);
+    setIsLoggedIn(true);
+    navigate(ROUTES.HOME);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setIsLoggedIn(false);
+    navigate(ROUTES.LOGIN);
+  };
+
   useEffect(() => {
     const verifyUser = async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.log('No token found, skipping profile fetch');
+        handleLogout();
+        return;
+      }
+
       try {
         const userData = await checkUser();
         if (userData) {
@@ -31,18 +50,6 @@ export const AuthProvider = ({ children }) => {
 
     verifyUser();
   }, []);
-
-  const handleLogin = (userData, token) => {
-    localStorage.setItem('authToken', token);
-    setIsLoggedIn(true);
-    navigate(ROUTES.HOME);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    setIsLoggedIn(false);
-    navigate(ROUTES.LOGIN);
-  };
 
   return <AuthContext.Provider value={{ isLoggedIn, handleLogin, handleLogout }}>{children}</AuthContext.Provider>;
 };

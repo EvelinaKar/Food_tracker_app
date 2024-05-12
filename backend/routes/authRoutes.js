@@ -61,8 +61,20 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/profile', authToken, (req, res) => {
-  res.send(req.user);
+router.get('/profile', authToken, async (req, res) => {
+  try {
+    const user = await client
+      .db(process.env.MONGO_DATABASE)
+      .collection('users')
+      .findOne({ _id: new ObjectId(req.user._id) });
+
+    if (!user) return res.status(404).send({ message: 'User not found.' });
+
+    return res.status(200).send({ user });
+  } catch (error) {
+    console.error('Profile fetch error:', error);
+    return res.status(500).send({ message: 'Error fetching profile.' });
+  }
 });
 
 module.exports = router;

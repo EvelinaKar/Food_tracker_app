@@ -49,21 +49,22 @@ router.post('/create-food', authToken, async (req, res) => {
 
 router.get('/my-foods', authToken, async (req, res) => {
   try {
+    const userId = req.user._id;
+    console.log('Attempting to retrieve food items for user ID:');
     const foodItems = await client
       .db(process.env.MONGO_DATABASE)
       .collection('foodItems')
-      .find({ userId: new ObjectId(`${req.user._id}`) })
+      .find({ userId: new ObjectId(userId) })
       .toArray();
 
     if (foodItems.length === 0) {
       return res.status(404).send({ message: 'No food items found.' });
     }
 
-    console.log('Retrieved food items for user:', userId);
     return res.status(200).send({ message: 'Food items retrieved successfully.', data: foodItems });
   } catch (error) {
     console.error('Error retrieving food items:', error);
-    return handleError(res, error);
+    return res.status(500).send({ message: 'Internal server error', error: error.toString() });
   }
 });
 
