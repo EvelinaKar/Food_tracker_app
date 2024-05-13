@@ -31,15 +31,15 @@ const CreateFoodForm = () => {
   const handleSubmit = async (event, stayOnPage = false) => {
     event.preventDefault();
     if (!isLoggedIn) {
-      alert('Please log in to add food items.');
+      alert('Please log in to add food.');
       navigate(ROUTES.LOGIN);
       return;
     }
 
     try {
       const response = await createFoodItem(formData);
-      console.log('Food item added:', response);
-      alert('Food item added successfully!');
+      console.log('Food added:', response);
+      alert('Food added successfully!');
       if (!stayOnPage) {
         navigate(ROUTES.MY_FOODS);
       } else {
@@ -53,8 +53,7 @@ const CreateFoodForm = () => {
         });
       }
     } catch (error) {
-      console.error('Error creating food item:', error);
-      setError('Failed to add food item. Please check the console for more info.');
+      console.error('Error creating food:', error);
     }
   };
 
@@ -87,9 +86,9 @@ const CreateFoodForm = () => {
           Protein (grams):
           <input type="number" name="protein" value={formData.protein} onChange={handleChange} required />
         </label>
-        <Button type="submit">Add Food Item and View List</Button>
+        <Button type="submit">Add Food and View List</Button>
         <Button type="button" onClick={(e) => handleSubmit(e, true)}>
-          Add Another Food Item
+          Add Another Food
         </Button>
       </form>
     </div>

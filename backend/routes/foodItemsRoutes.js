@@ -33,7 +33,7 @@ router.post('/create-food', authToken, async (req, res) => {
       });
 
     if (existingFoodItem) {
-      return res.status(400).send({ message: 'Food item already exists.' });
+      return res.status(400).send({ message: 'Food item with this name already exists.' });
     }
 
     const newFoodItem = {
@@ -57,7 +57,6 @@ router.post('/create-food', authToken, async (req, res) => {
 router.get('/my-foods', authToken, async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log('Attempting to retrieve food items for user ID:');
     const foodItems = await client
       .db(process.env.MONGO_DATABASE)
       .collection('foodItems')
