@@ -2,7 +2,7 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const { authToken } = require('../middlewares/authMiddleware');
 const { handleError } = require('../validation/errorHandler');
-const { foodItemSchema } = require('../validation/authValidationSchemas');
+const { foodItemSchema } = require('../validation/foodItemsValidationSchemas');
 
 require('dotenv').config();
 
@@ -11,14 +11,24 @@ const client = require('../config/db');
 
 router.post('/create-food', authToken, async (req, res) => {
   try {
-    await foodItemSchema.validate(req.body, { abortEarly: false });
-    const { name, valuesPer, kcal, fat, carbs, protein } = req.body;
+    const validatedData = await foodItemSchema.validate(req.body, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    let { name, valuesPer, kcal, fat, carbs, protein } = validatedData;
+
+    valuesPer = Number(valuesPer);
+    kcal = Number(kcal);
+    fat = Number(fat);
+    carbs = Number(carbs);
+    protein = Number(protein);
 
     const existingFoodItem = await client
       .db(process.env.MONGO_DATABASE)
       .collection('foodItems')
       .findOne({
-        userId: new ObjectId(`${req.user._id}`),
+        userId: new ObjectId(req.user._id),
         name: name,
       });
 
@@ -27,7 +37,7 @@ router.post('/create-food', authToken, async (req, res) => {
     }
 
     const newFoodItem = {
-      userId: new ObjectId(`${req.user._id}`),
+      userId: new ObjectId(req.user._id),
       name,
       valuesPer,
       kcal,
@@ -36,14 +46,11 @@ router.post('/create-food', authToken, async (req, res) => {
       protein,
     };
 
-    const response = await client.db(process.env.MONGO_DATABASE).collection('foodItems').insertOne(newFoodItem);
-    newFoodItem._id = response.insertedId;
-
-    console.log('Food item created:', newFoodItem);
+    await client.db(process.env.MONGO_DATABASE).collection('foodItems').insertOne(newFoodItem);
     return res.status(201).send({ message: 'Food item added successfully.', data: newFoodItem });
   } catch (error) {
     console.error('Create food item error:', error);
-    return handleError(res, error);
+    return res.status(500).send({ message: 'Internal server error', error: error.toString() });
   }
 });
 

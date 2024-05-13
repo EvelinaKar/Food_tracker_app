@@ -1,10 +1,15 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { createFoodItem } from '../../api/foodItems';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from './CreateFoodItem.module.scss';
+import Button from '../../components/Button/Button';
+import { ROUTES } from '../../routes/consts';
 
 const CreateFoodForm = () => {
-  const { token } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     valuesPer: '',
@@ -14,6 +19,8 @@ const CreateFoodForm = () => {
     protein: '',
   });
 
+  const [error, setError] = useState(null);
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -21,34 +28,48 @@ const CreateFoodForm = () => {
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, stayOnPage = false) => {
     event.preventDefault();
-    if (token) {
-      try {
-        console.log('Token used for request:', token);
-        const response = await createFoodItem(formData, token);
-        console.log(response);
-        alert('Food item added successfully!');
-      } catch (error) {
-        console.error('Error creating food item:', error);
-        alert('Failed to add food item. Please check the console for more info.');
+    if (!isLoggedIn) {
+      alert('Please log in to add food items.');
+      navigate(ROUTES.LOGIN);
+      return;
+    }
+
+    try {
+      const response = await createFoodItem(formData);
+      console.log('Food item added:', response);
+      alert('Food item added successfully!');
+      if (!stayOnPage) {
+        navigate(ROUTES.MY_FOODS);
+      } else {
+        setFormData({
+          name: '',
+          valuesPer: '',
+          kcal: '',
+          fat: '',
+          carbs: '',
+          protein: '',
+        });
       }
-    } else {
-      alert('No authentication token found. Please log in.');
+    } catch (error) {
+      console.error('Error creating food item:', error);
+      setError('Failed to add food item. Please check the console for more info.');
     }
   };
 
   return (
     <div className={styles.container}>
       <h2>Create New Food Item</h2>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      {error && <p className={styles.error}>{error}</p>}
+      <form onSubmit={(e) => handleSubmit(e, false)} className={styles.form}>
         <label>
           Name:
           <input type="text" name="name" value={formData.name} onChange={handleChange} required />
         </label>
         <label>
-          Values Per (e.g., 100g):
-          <input type="text" name="valuesPer" value={formData.valuesPer} onChange={handleChange} required />
+          Values Per (e.g., 100 grams):
+          <input type="number" name="valuesPer" value={formData.valuesPer} onChange={handleChange} required />
         </label>
         <label>
           Calories:
@@ -66,10 +87,25 @@ const CreateFoodForm = () => {
           Protein (grams):
           <input type="number" name="protein" value={formData.protein} onChange={handleChange} required />
         </label>
-        <button type="submit">Add Food Item</button>
+        <Button type="submit">Add Food Item and View List</Button>
+        <Button type="button" onClick={(e) => handleSubmit(e, true)}>
+          Add Another Food Item
+        </Button>
       </form>
     </div>
   );
+};
+
+CreateFoodForm.propTypes = {
+  initialValues: PropTypes.shape({
+    name: PropTypes.string,
+    valuesPer: PropTypes.string,
+    kcal: PropTypes.string,
+    fat: PropTypes.string,
+    carbs: PropTypes.string,
+    protein: PropTypes.string,
+  }),
+  onFormSubmit: PropTypes.func,
 };
 
 export default CreateFoodForm;

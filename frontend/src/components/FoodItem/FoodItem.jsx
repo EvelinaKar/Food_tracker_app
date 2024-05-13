@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import styles from './FoodItem.module.scss';
 
 const FoodItem = ({ foodItem }) => {
-  if (!foodItem) return <div>No food item data available.</div>;
+  if (!foodItem) return <div>No foods data available.</div>;
 
   return (
     <div className="food-item">
@@ -24,7 +26,7 @@ FoodItem.propTypes = {
     fat: PropTypes.number.isRequired,
     carbs: PropTypes.number.isRequired,
     protein: PropTypes.number.isRequired,
-    valuesPer: PropTypes.string.isRequired,
+    valuesPer: PropTypes.number.isRequired,
   }),
 };
 
