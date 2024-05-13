@@ -4,6 +4,9 @@ export const ROUTES = {
   HOME: '/home',
   MY_FOODS: '/my-foods',
   CREATE_FOOD: '/create-food',
+  MY_MEALS: '/my-meals',
+  CREATE_MEAL: '/create-meal',
+  VIEW_MEAL: '/view-meal',
 };
 
 export const navigationBarLinks = [
@@ -14,5 +17,9 @@ export const navigationBarLinks = [
   {
     title: 'My Foods',
     path: ROUTES.MY_FOODS,
+  },
+  {
+    title: 'My Meals',
+    path: ROUTES.MY_MEALS,
   },
 ];

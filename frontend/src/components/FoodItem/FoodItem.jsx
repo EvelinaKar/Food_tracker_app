@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import styles from './FoodItem.module.scss';
 
 const FoodItem = ({ foodItem }) => {
   if (!foodItem) return <div>No foods data available.</div>;

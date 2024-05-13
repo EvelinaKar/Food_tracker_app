@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const authRoutes = require('./routes/authRoutes');
 const foodItemsRoutes = require('./routes/foodItemsRoutes');
+const mealsRoutes = require('./routes/mealsRoutes');
 
 require('dotenv').config();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 app.use('/api', foodItemsRoutes);
+app.use('/api', mealsRoutes);
 
 const PORT = process.env.PORT || 8080;
 

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { authToken } = require('../middlewares/authMiddleware');
 const { registerSchema, loginSchema } = require('../validation/authValidationSchemas');
 const { handleError } = require('../validation/errorHandler');
-const { fetchUserWithFoodItems, userDataResponse } = require('../utils/db');
+const { fetchUserWithFoodItems, userDataResponse, fetchUserWithMeals } = require('../utils/db');
 
 require('dotenv').config();
 
@@ -69,6 +69,9 @@ router.get('/profile', authToken, async (req, res) => {
       .findOne({ _id: new ObjectId(req.user._id) });
 
     if (!user) return res.status(404).send({ message: 'User not found.' });
+
+    const meals = await fetchUserWithMeals(req.user._id);
+    user.meals = meals;
 
     return res.status(200).send({ user });
   } catch (error) {

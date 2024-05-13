@@ -47,4 +47,19 @@ const userDataResponse = (user) => {
   };
 };
 
-module.exports = { fetchUserWithFoodItems, userDataResponse };
+const fetchUserWithMeals = async (userId) => {
+  try {
+    const meals = await client
+      .db(process.env.MONGO_DATABASE)
+      .collection('meals')
+      .find({ userId: new ObjectId(userId) })
+      .toArray();
+
+    return meals;
+  } catch (error) {
+    console.error('Failed to fetch meals:', error);
+    throw new Error('Database operation failed');
+  }
+};
+
+module.exports = { fetchUserWithFoodItems, userDataResponse, fetchUserWithMeals };
