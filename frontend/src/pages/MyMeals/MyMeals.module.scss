@@ -1,19 +1,40 @@
-.MyFoods {
+@import "../../styles/colors";
+
+.container {
+  padding: 20px;
+  background-color: $secondary-backgound-color;
+  color: $main-text-color;
+  min-height: 100vh;
+
+  .header {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background-color: #f8f9fa; // A light grey background
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    width: auto;
-  
-    .noFoods {
-      color: #6c757d; // A soft grey text color
-      text-align: center;
-      padding: 20px;
-      font-size: 1.2rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
+
+     Button {
+      margin: 0;
     }
   }
-  
-  
+
+  .error {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .noData {
+    font-size: 1.2rem;
+  }
+
+  .mealsCardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+}

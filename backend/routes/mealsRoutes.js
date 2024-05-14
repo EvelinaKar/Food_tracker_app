@@ -46,7 +46,6 @@ router.post('/create-meal', authToken, async (req, res) => {
     await client.db(process.env.MONGO_DATABASE).collection('meals').insertOne(newMeal);
     return res.status(201).send({ message: 'Meal added successfully.', data: newMeal });
   } catch (error) {
-    console.error('Create meal error:', error);
     return res.status(500).send({ message: 'Internal server error', error: error.toString() });
   }
 });
@@ -66,7 +65,6 @@ router.get('/my-meals', authToken, async (req, res) => {
 
     return res.status(200).send({ message: 'Meals retrieved successfully.', data: meals });
   } catch (error) {
-    console.error('Error retrieving meals:', error);
     return res.status(500).send({ message: 'Internal server error', error: error.toString() });
   }
 });

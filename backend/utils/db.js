@@ -22,7 +22,6 @@ const fetchUserWithFoodItems = async (email) => {
 
     return response.length ? response[0] : null;
   } catch (error) {
-    console.error('Failed to fetch user with food items:', error);
     throw new Error('Database operation failed');
   }
 };
@@ -57,7 +56,6 @@ const fetchUserWithMeals = async (userId) => {
 
     return meals;
   } catch (error) {
-    console.error('Failed to fetch meals:', error);
     throw new Error('Database operation failed');
   }
 };

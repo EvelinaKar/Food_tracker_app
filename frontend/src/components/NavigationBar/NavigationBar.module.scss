@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
-  background-color: $primary-color;
+  background-color: $secondary-backgound-color;
 
   .logoContainer {
     width: 80px;
@@ -18,10 +18,18 @@
 
   .nav {
     display: flex;
-    gap: 2rem;
+    gap: 10rem;
 
     a {
       font-size: 1.2rem;
+      font-weight:bold;
+      color: $main-text-color;
+      text-decoration: none;
+
+      &:hover {
+        color: $accent-color;
+        outline: none;
+      }
     }
   }
 }
