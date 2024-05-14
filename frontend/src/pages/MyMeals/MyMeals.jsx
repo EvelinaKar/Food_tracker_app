@@ -38,11 +38,19 @@ const MyMeals = () => {
   };
 
   return (
-    <div>
-      <h1>My Meals</h1>
-      {error && <p>{error}</p>}
-      <Button onClick={handleCreateMealClick}>Add New Meal</Button>
-      {meals.length > 0 ? meals.map((meal) => <MealItem key={meal._id} meal={meal} />) : <p>No meals found. Add some!</p>}
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1>My Meals</h1>
+        <Button onClick={handleCreateMealClick}>Add New Meal</Button>
+      </div>
+      {error && <p className={styles.error}>{error}</p>}
+      <div className={styles.mealsCardsContainer}>
+        {meals.length > 0 ? (
+          meals.map((meal) => <MealItem key={meal._id} meal={meal} />)
+        ) : (
+          <p className={styles.noData}>No meals found. Add some!</p>
+        )}
+      </div>
     </div>
   );
 };

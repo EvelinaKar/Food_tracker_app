@@ -67,7 +67,7 @@ const CreateFoodForm = () => {
           <input type="text" name="name" value={formData.name} onChange={handleChange} required />
         </label>
         <label>
-          Values Per (e.g., 100 grams):
+          Values per (grams):
           <input type="number" name="valuesPer" value={formData.valuesPer} onChange={handleChange} required />
         </label>
         <label>

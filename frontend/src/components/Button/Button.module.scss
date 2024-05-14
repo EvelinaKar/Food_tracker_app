@@ -1,6 +1,8 @@
+@import "../../styles/colors";
+
 .button {
-  background-color: #2b2b28;
-  color: #ebebe3;
+  background-color: $primary-button-color;
+  color: $primary-button-text-color;
   border: none;
   padding: 10px 20px;
   border-radius: 30px;
@@ -10,5 +12,9 @@
 
   &:focus {
     outline: none;
+  }
+
+  &:hover {
+    background-color: $accent-color;
   }
 }

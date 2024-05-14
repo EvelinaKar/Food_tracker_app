@@ -5,6 +5,7 @@ import FoodItem from '../../components/FoodItem/FoodItem';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ROUTES } from '../../routes/consts';
 import Button from '../../components/Button/Button';
+import styles from './MyFoods.module.scss';
 
 const MyFoods = () => {
   const [foodItems, setFoodItems] = useState([]);
