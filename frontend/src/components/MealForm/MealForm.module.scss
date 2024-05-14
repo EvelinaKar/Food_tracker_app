@@ -39,21 +39,68 @@
         flex: 1;
       }
 
-      input {
+      input[type="text"], input[type="number"], textarea {
         padding: 10px;
-        margin-left: 10px;
         border: 1px solid $main-text-color;
-        border-radius: 5px;
-        font-size: 1rem;
+        border-radius: 4px;
+        margin-top: 8px;
         width: 60%;
-        max-width: 350px;
 
         &:focus {
-          outline: none;
           border-color: $accent-color;
+          outline: none;
         }
       }
+
+      textarea {
+        max-width: 60%;
+      }
     }
+
+    input[type="number"], .select, .selectDropdown {
+      padding: 10px;
+      margin: 0 10px 0 30px;
+      border-radius: 4px;
+      width: 30%;
+
+      &:focus {
+        border-color: $accent-color;
+        outline: none;
+      }
+    }
+
+    .selectDropdown {
+      width: 59.6%;
+    }
+
+    .select {
+      width: 15%;
+      margin: 0;
+    }
+
+    .ingredientsContainer {
+      margin-bottom: 30px;
+    }
+
+    .ingredientsHeader {
+      font-weight: bold;
+      font-size: 1.2rem;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .removeButton {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0;
+      padding-top: 1px;
+      cursor: pointer;
+      color: $main-text-color;
+    }
+
+   
 
     Button {
       margin-top: 20px;

@@ -59,31 +59,31 @@ const CreateFoodForm = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Create New Food Item</h2>
+      <h2>Create New Food</h2>
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={(e) => handleSubmit(e, false)} className={styles.form}>
         <label>
-          Name:
+          <span>Name:</span>
           <input type="text" name="name" value={formData.name} onChange={handleChange} required />
         </label>
         <label>
-          Values per (grams):
+          <span>Values per (g):</span>
           <input type="number" name="valuesPer" value={formData.valuesPer} onChange={handleChange} required />
         </label>
         <label>
-          Calories:
+          <span>‣ Calories:</span>
           <input type="number" name="kcal" value={formData.kcal} onChange={handleChange} required />
         </label>
         <label>
-          Fat (grams):
+          <span>‣ Fat (g):</span>
           <input type="number" name="fat" value={formData.fat} onChange={handleChange} required />
         </label>
         <label>
-          Carbs (grams):
+          <span>‣ Carbs (g):</span>
           <input type="number" name="carbs" value={formData.carbs} onChange={handleChange} required />
         </label>
         <label>
-          Protein (grams):
+          <span>‣ Protein (g):</span>
           <input type="number" name="protein" value={formData.protein} onChange={handleChange} required />
         </label>
         <Button type="submit">Add Food and View List</Button>

@@ -69,4 +69,61 @@ router.get('/my-meals', authToken, async (req, res) => {
   }
 });
 
+router.get('/meal/:id', authToken, async (req, res) => {
+  try {
+    const mealId = new ObjectId(req.params.id);
+
+    const meal = await client.db(process.env.MONGO_DATABASE).collection('meals').findOne({ _id: mealId });
+
+    if (!meal) {
+      return res.status(404).send({ message: 'Meal not found.' });
+    }
+
+    return res.status(200).send({ message: 'Meal retrieved successfully.', data: meal });
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal server error', error: error.toString() });
+  }
+});
+
+router.put('/update-meal/:id', authToken, async (req, res) => {
+  try {
+    const validatedData = await mealSchema.validate(req.body, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    let { photo, name, ingredients, description, calories, servings } = validatedData;
+
+    calories = Number(calories);
+    servings = Number(servings);
+
+    const mealId = new ObjectId(req.params.id);
+    const userId = new ObjectId(req.user._id);
+
+    const updatedMeal = {
+      userId,
+      name,
+      ingredients,
+      description,
+      calories,
+      servings,
+      photo,
+    };
+
+    const result = await client
+      .db(process.env.MONGO_DATABASE)
+      .collection('meals')
+      .updateOne({ _id: mealId, userId }, { $set: updatedMeal });
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).send({ message: 'Meal not found or not authorized to update.' });
+    }
+
+    return res.status(200).send({ message: 'Meal updated successfully.', data: updatedMeal });
+  } catch (error) {
+    console.error('Update meal error:', error);
+    return res.status(500).send({ message: 'Internal server error', error: error.toString() });
+  }
+});
+
 module.exports = router;

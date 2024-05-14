@@ -38,11 +38,19 @@ const MyFoods = () => {
   };
 
   return (
-    <div>
-      <h1>My Food Items</h1>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1>My Food</h1>
+        <Button onClick={handleCreateFoodClick}>Add New Food</Button>
+      </div>
       {error && <p>{error}</p>}
-      <Button onClick={handleCreateFoodClick}>Create Food</Button>
-      {foodItems.length > 0 ? foodItems.map((item) => <FoodItem key={item._id} foodItem={item} />) : <p>No food items found. Add some!</p>}
+      <div className={styles.foodItemsContainer}>
+        {foodItems.length > 0 ? (
+          foodItems.map((item) => <FoodItem key={item._id} foodItem={item} />)
+        ) : (
+          <p className={styles.noData}>No food found. Add some!</p>
+        )}
+      </div>
     </div>
   );
 };
