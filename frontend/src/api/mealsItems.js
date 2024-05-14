@@ -19,14 +19,23 @@ export const fetchMeals = async () => {
   }
 };
 
-export const fetchMealItem = async (mealId) => {
-  if (!mealId) {
+export const fetchMealItem = async (id) => {
+  if (!id) {
     throw new Error('Meal ID is required to fetch meal details.');
   }
   try {
-    const response = await axiosInstance.get(`${API}/api/view-meal/${mealId}`);
+    const response = await axiosInstance.get(`${API}/api/meal/${id}`);
     return response.data.data;
   } catch (error) {
     throw new Error('Failed to fetch meal details.');
+  }
+};
+
+export const updateMeal = async (id, data) => {
+  try {
+    const response = await axiosInstance.put(`${API}/api/update-meal/${id}`, data);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to update meal.');
   }
 };

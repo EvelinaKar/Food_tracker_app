@@ -1,18 +1,19 @@
 import PropTypes from 'prop-types';
+import styles from './FoodItem.module.scss';
 
 const FoodItem = ({ foodItem }) => {
   if (!foodItem) return <div>No foods data available.</div>;
 
   return (
-    <div className="food-item">
+    <div className={styles.container}>
       <h2>{foodItem.name}</h2>
-      <ul>
-        <li>Values Per: {foodItem.valuesPer} grams</li>
-        <li>Calories: {foodItem.kcal} kcal</li>
-        <li>Fat: {foodItem.fat} grams</li>
-        <li>Carbohydrates: {foodItem.carbs} grams</li>
-        <li>Protein: {foodItem.protein} grams</li>
-      </ul>
+      <div className={styles.details}>
+        <span>Values per: {foodItem.valuesPer}g</span>
+        <span>🔥 {foodItem.kcal}kcal</span>
+        <span>Fat: {foodItem.fat}g</span>
+        <span>Carbs: {foodItem.carbs}g</span>
+        <span>Protein: {foodItem.protein}g</span>
+      </div>
     </div>
   );
 };

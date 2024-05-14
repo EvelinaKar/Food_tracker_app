@@ -1,3 +1,5 @@
+@import "../../styles/colors";
+
 .formContainer {
     max-width: 600px;
     margin: 0 auto;
@@ -5,20 +7,24 @@
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
       rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    background-color: #ffffff00;
+    background-color: #33333300;
     backdrop-filter: blur(4px);
   }
   
   .formTitle {
     margin-bottom: 2rem;
     font-size: 24px;
-    color: #ebebe3;
+    color: $main-backgound-color;
     text-align: center;
   }
   
   .fullWidth {
     width: 100%;
     margin-bottom: 1rem;
+  }
+
+  .error {
+    color: $accent-color;
   }
   
   .loginButton {
@@ -29,6 +35,12 @@
   .registerLink{
     padding-top: 20px;
     text-align: center;
-    color: #ebebe3;
+    color: $main-backgound-color;
+
+    &:hover {
+      transform: scale(1.05);
+      color: $accent-color;
+    }
+
   }
   

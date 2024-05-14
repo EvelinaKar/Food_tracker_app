@@ -6,7 +6,8 @@ export const ROUTES = {
   CREATE_FOOD: '/create-food',
   MY_MEALS: '/my-meals',
   CREATE_MEAL: '/create-meal',
-  VIEW_MEAL: '/view-meal',
+  MEAL: '/meal/:id',
+  UPDATE_MEAL: '/update-meal/:id',
 };
 
 export const navigationBarLinks = [
@@ -15,11 +16,11 @@ export const navigationBarLinks = [
     path: ROUTES.HOME,
   },
   {
-    title: 'My Foods',
-    path: ROUTES.MY_FOODS,
-  },
-  {
     title: 'My Meals',
     path: ROUTES.MY_MEALS,
+  },
+  {
+    title: 'My Foods',
+    path: ROUTES.MY_FOODS,
   },
 ];

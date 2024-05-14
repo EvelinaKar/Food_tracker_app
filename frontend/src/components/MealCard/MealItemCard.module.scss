@@ -13,6 +13,7 @@
 
   &:hover {
     transform: scale(1.05);
+    background-color: $accent-color;
   }
 
   img {
@@ -37,11 +38,11 @@
 
   .details {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-self: flex-start;
 
     .detailItem {
-      margin: 5px 0;
+      margin: 0.5rem;
       font-size: 0.8rem;
     }
   }

@@ -1,16 +1,19 @@
 import { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import { createMeal } from '../../api/mealsItems';
+import { useNavigate, useParams } from 'react-router-dom';
+import { createMeal, fetchMealItem, updateMeal } from '../../api/mealsItems';
 import { fetchFoodItems } from '../../api/foodItems';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ROUTES } from '../../routes/consts';
-import styles from './CreateMeal.module.scss';
+import styles from './MealForm.module.scss';
 import Button from '../Button/Button';
 
-const CreateMealForm = () => {
+const MealForm = ({ mode }) => {
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEditMode = mode === 'edit';
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -40,8 +43,21 @@ const CreateMealForm = () => {
       }
     };
 
+    const loadMealData = async () => {
+      if (isEditMode && id) {
+        try {
+          const meal = await fetchMealItem(id);
+          setFormData(meal);
+        } catch (error) {
+          console.error('Failed to fetch meal data:', error);
+          setError('Failed to fetch meal data');
+        }
+      }
+    };
+
     loadFoodItems();
-  }, [isLoggedIn, navigate]);
+    loadMealData();
+  }, [isLoggedIn, navigate, isEditMode, id]);
 
   const handleChange = (event) => {
     setFormData({
@@ -56,7 +72,7 @@ const CreateMealForm = () => {
       const newIngredient = {
         id: food._id,
         name: food.name,
-        amount: '',
+        amount: '100',
         unit: 'g',
       };
       setFormData({
@@ -91,9 +107,16 @@ const CreateMealForm = () => {
     }
 
     try {
-      const response = await createMeal(formData);
-      console.log('Meal added:', response);
-      alert('Meal added successfully!');
+      if (isEditMode && id) {
+        const response = await updateMeal(id, formData);
+        console.log('Meal updated:', response);
+        alert('Meal updated successfully!');
+      } else {
+        const response = await createMeal(formData);
+        console.log('Meal added:', response);
+        alert('Meal added successfully!');
+      }
+
       if (!stayOnPage) {
         navigate(ROUTES.MY_MEALS);
       } else {
@@ -107,27 +130,39 @@ const CreateMealForm = () => {
         });
       }
     } catch (error) {
-      console.error('Error creating meal:', error);
+      console.error('Error creating/updating meal:', error);
     }
   };
 
   return (
     <div className={styles.container}>
-      <h2>Create New Meal</h2>
+      <h2>{mode === 'edit' ? 'Edit Meal' : 'Create New Meal'}</h2>
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={(e) => handleSubmit(e, false)} className={styles.form}>
         <label>
-          Name:
+          <span>Name:</span>
           <input type="text" name="name" value={formData.name} onChange={handleChange} required />
         </label>
         <label>
-          Description:
+          <span>Description:</span>
           <textarea name="description" value={formData.description} onChange={handleChange} required />
         </label>
-        <div>
-          <label>Ingredients:</label>
+        <div className={styles.ingredientsContainer}>
+          <label className={styles.ingredientsHeader}>Ingredients:</label>
+          <select value={selectedFoodId} onChange={(e) => setSelectedFoodId(e.target.value)} className={styles.selectDropdown}>
+            <option value="">Select a food item</option>
+            {foodItems.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+          <Button onClick={handleAddIngredient}>Add Ingredient</Button>
           {formData.ingredients.map((ingredient, index) => (
             <div key={index} className={styles.ingredientRow}>
+              <button onClick={() => removeIngredient(index)} className={styles.removeButton}>
+                &times;
+              </button>
               {ingredient.name}
               <input
                 type="number"
@@ -143,58 +178,40 @@ const CreateMealForm = () => {
                   </option>
                 ))}
               </select>
-              <button onClick={() => removeIngredient(index)} className={styles.removeButton}>
-                X
-              </button>
             </div>
           ))}
-          <select value={selectedFoodId} onChange={(e) => setSelectedFoodId(e.target.value)} className={styles.selectDropdown}>
-            <option value="">Select a food item</option>
-            {foodItems.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          <Button onClick={handleAddIngredient}>Add Ingredient</Button>
         </div>
         <label>
-          Calories per Serving:
+          <span>Calories per Serving:</span>
           <input type="number" name="calories" value={formData.calories} onChange={handleChange} required />
         </label>
         <label>
-          Servings:
+          <span>Servings:</span>
           <input type="number" name="servings" value={formData.servings} onChange={handleChange} required />
         </label>
         <label>
-          Photo URL:
+          <span>Photo URL:</span>
           <input type="text" name="photo" value={formData.photo} onChange={handleChange} />
         </label>
-        <Button type="submit">Add Meal and View List</Button>
-        <Button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit(e, true);
-          }}
-        >
-          Add Another Meal
-        </Button>
+        <Button type="submit">{isEditMode ? 'Update Meal' : 'Add Meal and View List'}</Button>
+        {!isEditMode && (
+          <Button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit(e, true);
+            }}
+          >
+            Add Another Meal
+          </Button>
+        )}
       </form>
     </div>
   );
 };
 
-CreateMealForm.propTypes = {
-  initialValues: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    ingredients: PropTypes.arrayOf(PropTypes.object),
-    calories: PropTypes.string,
-    servings: PropTypes.string,
-    photo: PropTypes.string,
-  }),
-  onFormSubmit: PropTypes.func,
+MealForm.propTypes = {
+  mode: PropTypes.string,
 };
 
-export default CreateMealForm;
+export default MealForm;

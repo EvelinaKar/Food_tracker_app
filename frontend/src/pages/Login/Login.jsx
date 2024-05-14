@@ -57,7 +57,7 @@ function Login() {
       console.error('Login failed:', error);
       setErrors({
         ...errors,
-        apiError: error.response ? error.response.data.message : 'Login failed.',
+        apiError: error.response ? error.response.data.message : 'Login failed. Incorrect email or password!',
       });
     }
   };
@@ -66,6 +66,8 @@ function Login() {
     <div className={styles.formContainer}>
       <div className={styles.formTitle}>Login</div>
       <form onSubmit={handleSubmit} className={styles.form}>
+        {errors.apiError && <span className={styles.error}>{errors.apiError}</span>}
+        {errors.email && <span className={styles.error}>{errors.email}</span>}
         <Input
           id="email"
           name="email"

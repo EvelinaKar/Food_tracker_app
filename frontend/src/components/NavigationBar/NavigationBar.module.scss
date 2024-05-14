@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 10px 20px;
   background-color: $secondary-backgound-color;
 
   .logoContainer {
@@ -18,10 +18,12 @@
 
   .nav {
     display: flex;
+    align-items: center;
     gap: 10rem;
 
     a {
       font-size: 1.2rem;
+      margin: 0 10px;
       font-weight:bold;
       color: $main-text-color;
       text-decoration: none;
@@ -30,6 +32,77 @@
         color: $accent-color;
         outline: none;
       }
+    }
+
+    Button {
+      margin-left: 20px;
+    }
+  }
+
+  .hamburger, .closeButton {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    
+    .bar {
+      width: 25px;
+      height: 3px;
+      background-color: $main-text-color;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+  }
+
+  @media (max-width: 1040px) {
+    .nav {
+      gap: 5rem;
+    }
+  }
+
+  @media (max-width: 792px) {
+    .nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      gap: 2rem;
+      height: 35%;
+      width: 200px;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid $accent-color;
+      background-color: $main-backgound-color;
+      padding-top: 60px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+
+      .closeButton {
+        display: flex;
+        position: absolute;
+        top: 2px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: $main-text-color;
+      }
+
+      a {
+        padding-left: 20px;
+        width: 100%;
+      }
+
+      Button {
+        margin: 20px;
+      }
+    }
+
+    .nav.open {
+      transform: translateX(0);
+    }
+
+    .hamburger {
+      display: flex;
     }
   }
 }

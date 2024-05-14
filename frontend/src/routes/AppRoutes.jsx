@@ -9,7 +9,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import { AuthContext } from '../contexts/AuthContext';
 import CreateFoodForm from '../components/CreateFoodItem/CreateFoodItem';
 import MyMeals from '../pages/MyMeals/MyMeals';
-import CreateMealForm from '../components/CreateMeal/CreateMeal';
+import MealForm from '../components/MealForm/MealForm';
 import ViewMealCard from '../components/ViewMeal/ViewMealCard';
 
 const AppRoutes = () => {
@@ -86,7 +86,7 @@ const AppRoutes = () => {
         element={
           isLoggedIn ? (
             <BasicLayout>
-              <CreateMealForm />
+              <MealForm mode="create" />
             </BasicLayout>
           ) : (
             <Navigate to="/login" />
@@ -94,11 +94,23 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/view-meal"
+        path="/meal/:id"
         element={
           isLoggedIn ? (
             <BasicLayout>
               <ViewMealCard />
+            </BasicLayout>
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/update-meal/:id"
+        element={
+          isLoggedIn ? (
+            <BasicLayout>
+              <MealForm mode="edit" />
             </BasicLayout>
           ) : (
             <Navigate to="/login" />

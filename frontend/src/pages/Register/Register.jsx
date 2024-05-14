@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { ROUTES } from '../../routes/consts';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import styles from './Register.module.scss';
@@ -21,25 +22,25 @@ function Register() {
 
     if (!formData.name) {
       formIsValid = false;
-      errors['name'] = 'Username cannot be empty';
+      errors['name'] = 'Username cannot be empty!';
     }
 
     if (!formData.email) {
       formIsValid = false;
-      errors['email'] = 'Email cannot be empty';
+      errors['email'] = 'Email cannot be empty!';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       formIsValid = false;
-      errors['email'] = 'Email is not valid';
+      errors['email'] = 'Email is not valid!';
     }
 
     if (formData.password.length < 6) {
       formIsValid = false;
-      errors['password'] = 'Password must be at least 6 characters';
+      errors['password'] = 'Password must be at least 6 characters!';
     }
 
     if (formData.password !== formData.confirmPassword) {
       formIsValid = false;
-      errors['confirmPassword'] = 'Passwords do not match';
+      errors['confirmPassword'] = 'Passwords do not match!';
     }
 
     setErrors(errors);
@@ -81,12 +82,11 @@ function Register() {
     <div className={styles.formContainer}>
       <div className={styles.formTitle}>Register</div>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <Input type="text" name="name" placeholder="Username" value={formData.name} onChange={handleChange} className={styles.fullWidth} />
         {errors.name && <span className={styles.error}>{errors.name}</span>}
-
-        <Input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className={styles.fullWidth} />
+        <Input type="text" name="name" placeholder="Username" value={formData.name} onChange={handleChange} className={styles.fullWidth} />
         {errors.email && <span className={styles.error}>{errors.email}</span>}
-
+        <Input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className={styles.fullWidth} />
+        {errors.password && <span className={styles.error}>{errors.password}</span>}
         <Input
           type="password"
           name="password"
@@ -95,8 +95,7 @@ function Register() {
           onChange={handleChange}
           className={styles.fullWidth}
         />
-        {errors.password && <span className={styles.error}>{errors.password}</span>}
-
+        {errors.confirmPassword && <span className={styles.error}>{errors.confirmPassword}</span>}
         <Input
           type="password"
           name="confirmPassword"
@@ -105,11 +104,12 @@ function Register() {
           onChange={handleChange}
           className={styles.fullWidth}
         />
-        {errors.confirmPassword && <span className={styles.error}>{errors.confirmPassword}</span>}
-
         <Button type="submit" className={styles.submitButton}>
           Register
         </Button>
+        <Link to={ROUTES.LOGIN}>
+          <div className={styles.loginLink}>Already have an account? Login</div>
+        </Link>
       </form>
     </div>
   );
