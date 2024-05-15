@@ -88,3 +88,4 @@ For information on the latest releases and new features, please refer to the Rel
 - GET /api/my-meal-plans - Get all meal plans for the authenticated user
 - PUT /api/update-meal-plan/:id - Update a meal plan by ID for the authenticated user
 - DELETE /api/delete-meal-plan/:id - Delete a meal plan by ID for the authenticated user
+  
