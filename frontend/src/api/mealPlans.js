@@ -10,6 +10,15 @@ export const fetchMealPlans = async () => {
   }
 };
 
+export const fetchMealPlan = async (id) => {
+  try {
+    const response = await axiosInstance.get(`${API}/api/meal-plan/${id}`);
+    return response.data.data;
+  } catch (error) {
+    throw new Error('Failed to fetch meal plan details.');
+  }
+};
+
 export const createMealPlan = async (data) => {
   try {
     const response = await axiosInstance.post(`${API}/api/create-meal-plan`, data);
