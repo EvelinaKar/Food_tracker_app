@@ -2,7 +2,7 @@
 
 ## Introduction
 
-PlatePerfect is a web application designed to help users manage their food lists, create meals, and develop meal plans. Whether you're looking to organize your dietary habits or streamline your meal preparation, This project aims to provide a user-friendly platform for creating, managing, and tracking meals and meal plans.
+PlatePerfect is a web application designed to help users manage their food lists, create meals, and develop meal plans. Whether you're looking to organize your dietary habits or streamline your meal preparation. This project aims to provide a user-friendly platform for creating, managing, and tracking meals and meal plans.
 
 ## Getting Started
 
