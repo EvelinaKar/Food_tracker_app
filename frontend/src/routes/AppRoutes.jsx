@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
-import Home from '../pages/Home/Home';
 import MyFoods from '../pages/MyFoods/MyFoods';
 import BasicLayout from '../layouts/BasicLayout';
 import AuthLayout from '../layouts/AuthLayout';
@@ -33,18 +32,6 @@ const AppRoutes = () => {
           <AuthLayout>
             <Register />
           </AuthLayout>
-        }
-      />
-      <Route
-        path="/home"
-        element={
-          isLoggedIn ? (
-            <BasicLayout>
-              <Home />
-            </BasicLayout>
-          ) : (
-            <Navigate to="/login" />
-          )
         }
       />
       <Route

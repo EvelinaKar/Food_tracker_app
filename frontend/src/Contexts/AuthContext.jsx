@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const handleLogin = (userData, token) => {
     localStorage.setItem('authToken', token);
     setIsLoggedIn(true);
-    navigate(ROUTES.HOME);
+    navigate(ROUTES.MY_MEAL_PLANS);
   };
 
   const handleLogout = () => {

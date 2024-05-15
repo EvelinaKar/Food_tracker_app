@@ -22,6 +22,7 @@ const NavigationBar = () => {
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <img src={Logo} alt="Logo" />
+        <span className={styles.logoTitle}>PlatePerfect</span>
       </div>
       <nav className={`${styles.nav} ${isMenuOpen ? styles.open : ''}`}>
         <button className={styles.closeButton} onClick={toggleMenu}>

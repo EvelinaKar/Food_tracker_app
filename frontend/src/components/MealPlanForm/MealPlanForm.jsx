@@ -108,7 +108,7 @@ const MealPlanForm = ({ mode }) => {
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
-          <span>Name:</span>
+          <span>Meal Plan Name:</span>
           <input type="text" name="name" value={formData.name} onChange={(e) => handleChange(e, 'name')} required />
         </label>
         <label>
