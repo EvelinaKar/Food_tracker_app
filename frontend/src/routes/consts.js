@@ -10,6 +10,7 @@ export const ROUTES = {
   DELETE_MEAL: '/delete-meal/:id',
   DELETE_FOOD: '/delete-food/:id',
   MY_MEAL_PLANS: '/my-meal-plans',
+  MEAL_PLAN: '/meal-plan/:id',
   CREATE_MEAL_PLAN: '/create-meal-plan',
   UPDATE_MEAL_PLAN: '/update-meal-plan/:id',
   DELETE_MEAL_PLAN: '/delete-meal-plan/:id',

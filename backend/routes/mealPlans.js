@@ -28,6 +28,21 @@ router.get('/my-meal-plans', authToken, async (req, res) => {
   }
 });
 
+router.get('/meal-plan/:id', authToken, async (req, res) => {
+  try {
+    const mealPlanId = new ObjectId(req.params.id);
+    const mealPlan = await client.db(process.env.MONGO_DATABASE).collection('mealPlans').findOne({ _id: mealPlanId });
+
+    if (!mealPlan) {
+      return res.status(404).send({ message: 'Meal plan not found.' });
+    }
+
+    return res.status(200).send({ message: 'Meal plan retrieved successfully.', data: mealPlan });
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal server error', error: error.toString() });
+  }
+});
+
 router.post('/create-meal-plan', authToken, async (req, res) => {
   try {
     const validatedData = await mealPlanSchema.validate(req.body, {
