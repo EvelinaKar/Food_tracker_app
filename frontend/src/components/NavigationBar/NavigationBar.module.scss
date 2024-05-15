@@ -8,18 +8,25 @@
   background-color: $secondary-backgound-color;
 
   .logoContainer {
-    width: 80px;
+    display: flex;
+    align-items: center;
 
     img {
-      width: 100%;
-      height: 100%;
+      width: 20%;
+      height: 20%;
+    }
+
+    .logoTitle {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: $main-text-color;
     }
   }
 
   .nav {
     display: flex;
     align-items: center;
-    gap: 10rem;
+    gap: 5rem;
 
     a {
       font-size: 1.2rem;

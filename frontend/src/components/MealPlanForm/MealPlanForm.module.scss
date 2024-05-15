@@ -39,7 +39,7 @@
         flex: 1;
       }
 
-      input[type="text"], input[type="number"], textarea {
+      input[type="text"], textarea {
         padding: 10px;
         border: 1px solid $main-text-color;
         border-radius: 4px;
@@ -55,59 +55,29 @@
       textarea {
         max-width: 60%;
       }
-    }
 
-    input[type="number"], .select, .selectDropdown {
-      padding: 10px;
-      margin: 0 10px 0 30px;
-      border-radius: 4px;
-      width: 30%;
-
-      &:focus {
-        border-color: $accent-color;
-        outline: none;
+      .selectDropdown {
+        width: 60%;
       }
     }
-
-    .selectDropdown {
-      width: 59.6%;
-    }
-
-    .select {
-      width: 15%;
-      margin: 0;
-    }
-
-    .ingredientsContainer {
-      margin-bottom: 30px;
-    }
-
-    .ingredientsHeader {
-      font-weight: bold;
-      font-size: 1.2rem;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .removeButton {
-      background: none;
-      border: none;
-      font-size: 2rem;
-      font-weight: bold;
-      margin: 0;
-      padding-top: 1px;
-      cursor: pointer;
-      color: $main-text-color;
-    }
-
-   
 
     Button {
       margin-top: 20px;
-
-      &:first-of-type {
-        margin-bottom: 10px;
-      }
     }
-  }
+
+    .addButton {
+      margin: 1rem 0 0 0.5rem;
+        background-color: $primary-button-text-color;
+        color: $secondary-button-text-color;
+        border: 1px solid lighten($secondary-button-text-color, 20%);
+
+        &:focus {
+            outline: none;
+          }
+        
+        &:hover {
+          background-color: $accent-color;
+         }
+      }
+   }
 }
