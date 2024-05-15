@@ -25,7 +25,6 @@ const MyFoods = () => {
         const result = await fetchFoodItems();
         setFoodItems(result);
       } catch (err) {
-        setError('Failed to fetch food items');
         console.error(err);
       }
     };
@@ -37,6 +36,10 @@ const MyFoods = () => {
     navigate(ROUTES.CREATE_FOOD);
   };
 
+  const handleDelete = (id) => {
+    setFoodItems((prevItems) => prevItems.filter((item) => item._id !== id));
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -46,7 +49,7 @@ const MyFoods = () => {
       {error && <p>{error}</p>}
       <div className={styles.foodItemsContainer}>
         {foodItems.length > 0 ? (
-          foodItems.map((item) => <FoodItem key={item._id} foodItem={item} />)
+          foodItems.map((item) => <FoodItem key={item._id} foodItem={item} onDelete={handleDelete} />)
         ) : (
           <p className={styles.noData}>No food found. Add some!</p>
         )}

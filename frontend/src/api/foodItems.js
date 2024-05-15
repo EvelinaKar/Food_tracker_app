@@ -18,3 +18,15 @@ export const fetchFoodItems = async () => {
     throw new Error('Failed to fetch foods');
   }
 };
+
+export const deleteFoodItem = async (id) => {
+  if (!id) {
+    throw new Error('Food item ID is required to delete food item.');
+  }
+  try {
+    const response = await axiosInstance.delete(`${API}/api/delete-food/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to delete food item.');
+  }
+};

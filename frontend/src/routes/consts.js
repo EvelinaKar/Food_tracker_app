@@ -8,12 +8,23 @@ export const ROUTES = {
   CREATE_MEAL: '/create-meal',
   MEAL: '/meal/:id',
   UPDATE_MEAL: '/update-meal/:id',
+  DELETE_MEAL: '/delete-meal/:id',
+  DELETE_FOOD: '/delete-food/:id',
+  MY_MEAL_PLANS: '/my-meal-plans',
+  // MEAL_PLAN: '/meal-plan/:id',
+  CREATE_MEAL_PLAN: '/create-meal-plan',
+  UPDATE_MEAL_PLAN: '/update-meal-plan/:id',
+  DELETE_MEAL_PLAN: '/delete-meal-plan/:id',
 };
 
 export const navigationBarLinks = [
   {
     title: 'Home',
     path: ROUTES.HOME,
+  },
+  {
+    title: 'My Meal Plans',
+    path: ROUTES.MY_MEAL_PLANS,
   },
   {
     title: 'My Meals',

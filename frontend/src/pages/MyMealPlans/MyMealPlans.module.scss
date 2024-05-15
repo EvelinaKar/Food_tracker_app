@@ -1,0 +1,39 @@
+@import "../../styles/colors";
+  
+  .container {
+    padding: 20px;
+    background-color: $secondary-backgound-color;
+    color: $main-text-color;
+    min-height: 100vh;
+  
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      
+      h1 {
+        font-size: 2rem;
+        margin: 0;
+      }
+  
+       Button {
+        margin: 0;
+      }
+    }
+  
+    .error {
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+  
+    .noData {
+      font-size: 1.2rem;
+    }
+  
+    .foodItemsContainer {
+      display: flex;
+      flex-direction: column;
+    }
+  }

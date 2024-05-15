@@ -72,4 +72,22 @@ router.get('/my-foods', authToken, async (req, res) => {
   }
 });
 
+router.delete('/delete-food/:id', authToken, async (req, res) => {
+  try {
+    const foodItemId = new ObjectId(req.params.id);
+    const userId = new ObjectId(req.user._id);
+
+    const result = await client.db(process.env.MONGO_DATABASE).collection('foodItems').deleteOne({ _id: foodItemId, userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).send({ message: 'Food item not found or not authorized to delete.' });
+    }
+
+    return res.status(200).send({ message: 'Food item deleted successfully.' });
+  } catch (error) {
+    console.error('Delete food item error:', error);
+    return res.status(500).send({ message: 'Internal server error', error: error.toString() });
+  }
+});
+
 module.exports = router;
