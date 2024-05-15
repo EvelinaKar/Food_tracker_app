@@ -126,4 +126,22 @@ router.put('/update-meal/:id', authToken, async (req, res) => {
   }
 });
 
+router.delete('/delete-meal/:id', authToken, async (req, res) => {
+  try {
+    const mealId = new ObjectId(req.params.id);
+    const userId = new ObjectId(req.user._id);
+
+    const result = await client.db(process.env.MONGO_DATABASE).collection('meals').deleteOne({ _id: mealId, userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).send({ message: 'Meal not found or not authorized to delete.' });
+    }
+
+    return res.status(200).send({ message: 'Meal deleted successfully.' });
+  } catch (error) {
+    console.error('Delete meal error:', error);
+    return res.status(500).send({ message: 'Internal server error', error: error.toString() });
+  }
+});
+
 module.exports = router;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
-import { fetchMealItem } from '../../api/mealsItems';
+import { fetchMealItem, deleteMeal } from '../../api/mealsItems';
 import { ROUTES } from '../../routes/consts';
 import styles from './ViewMealCard.module.scss';
 import Button from '../Button/Button';
@@ -36,6 +36,22 @@ const ViewMealCard = () => {
     fetchMeal();
   }, [id, isLoggedIn, navigate]);
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm('Are you sure you want to delete this meal?');
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await deleteMeal(id);
+      alert('Meal deleted successfully!');
+      navigate(ROUTES.MY_MEALS);
+    } catch (error) {
+      console.error('Failed to delete meal:', error);
+      alert('Failed to delete meal.');
+    }
+  };
+
   if (isLoading) return <div className={styles.loading}>Loading...</div>;
   if (error) return <div className={styles.error}>Error: {error}</div>;
   if (!meal) return <div className={styles.noData}>No meal data available.</div>;
@@ -69,7 +85,7 @@ const ViewMealCard = () => {
         <Button className={styles.secondaryButton} onClick={() => navigate(`/update-meal/${id}`)}>
           Edit Meal
         </Button>
-        <Button className={styles.secondaryButton} onClick={() => navigate(ROUTES.MY_MEALS)}>
+        <Button className={styles.secondaryButton} onClick={handleDelete}>
           Delete Meal
         </Button>
       </div>

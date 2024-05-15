@@ -25,7 +25,6 @@ const MyMeals = () => {
         const result = await fetchMeals();
         setMeals(result);
       } catch (err) {
-        setError('Failed to fetch meals');
         console.error(err);
       }
     };

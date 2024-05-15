@@ -11,6 +11,8 @@ import CreateFoodForm from '../components/CreateFoodItem/CreateFoodItem';
 import MyMeals from '../pages/MyMeals/MyMeals';
 import MealForm from '../components/MealForm/MealForm';
 import ViewMealCard from '../components/ViewMeal/ViewMealCard';
+import MealPlanForm from '../components/MealPlanForm/MealPlanForm';
+import MyMealPlans from '../pages/MyMealPlans/MyMealPlans';
 
 const AppRoutes = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -111,6 +113,42 @@ const AppRoutes = () => {
           isLoggedIn ? (
             <BasicLayout>
               <MealForm mode="edit" />
+            </BasicLayout>
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/my-meal-plans"
+        element={
+          isLoggedIn ? (
+            <BasicLayout>
+              <MyMealPlans />
+            </BasicLayout>
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/create-meal-plan"
+        element={
+          isLoggedIn ? (
+            <BasicLayout>
+              <MealPlanForm mode="create" />
+            </BasicLayout>
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/update-meal-plan/:id"
+        element={
+          isLoggedIn ? (
+            <BasicLayout>
+              <MealPlanForm mode="edit" />
             </BasicLayout>
           ) : (
             <Navigate to="/login" />

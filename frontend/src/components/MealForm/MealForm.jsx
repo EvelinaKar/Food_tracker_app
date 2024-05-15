@@ -39,7 +39,6 @@ const MealForm = ({ mode }) => {
         setFoodItems(items);
       } catch (error) {
         console.error('Failed to fetch foods:', error);
-        setError('Failed to fetch foods');
       }
     };
 
@@ -67,12 +66,13 @@ const MealForm = ({ mode }) => {
   };
 
   const handleAddIngredient = () => {
+    event.preventDefault();
     const food = foodItems.find((item) => item._id === selectedFoodId);
     if (food) {
       const newIngredient = {
         id: food._id,
         name: food.name,
-        amount: '100',
+        amount: '',
         unit: 'g',
       };
       setFormData({

@@ -39,3 +39,12 @@ export const updateMeal = async (id, data) => {
     throw new Error('Failed to update meal.');
   }
 };
+
+export const deleteMeal = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`${API}/api/delete-meal/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to delete meal.');
+  }
+};
