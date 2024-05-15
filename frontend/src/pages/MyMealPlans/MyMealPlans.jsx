@@ -26,7 +26,6 @@ const MyMealPlans = () => {
         const mealPlansResult = await fetchMealPlans();
         setMealPlans(mealPlansResult);
       } catch (err) {
-        setError('Failed to fetch meal plans');
         console.error(err);
       }
     };
@@ -36,7 +35,6 @@ const MyMealPlans = () => {
         const mealsResult = await fetchMeals();
         setMeals(mealsResult);
       } catch (err) {
-        setError('Failed to fetch meals');
         console.error(err);
       }
     };
