@@ -10,6 +10,7 @@ import styles from './MyMealPlans.module.scss';
 const MyMealPlans = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();

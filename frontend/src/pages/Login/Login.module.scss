@@ -14,7 +14,7 @@
   .formTitle {
     margin-bottom: 2rem;
     font-size: 24px;
-    color: $main-backgound-color;
+    color: $main-text-color;
     text-align: center;
   }
   
@@ -35,7 +35,7 @@
   .registerLink{
     padding-top: 20px;
     text-align: center;
-    color: $main-backgound-color;
+    color: $secondary-text-color;
 
     &:hover {
       transform: scale(1.05);

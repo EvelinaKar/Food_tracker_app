@@ -89,7 +89,7 @@ function Login() {
           required
         />
         <Button type="submit" className={styles.loginButton}>
-          Log In
+          Login
         </Button>
         <Link to={ROUTES.REGISTER}>
           <div className={styles.registerLink}>Do not have an account? Register</div>
